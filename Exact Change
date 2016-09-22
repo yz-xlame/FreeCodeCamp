@@ -1,0 +1,41 @@
+function checkCashRegister(price, cash, cid) {
+  var result=cash-price;
+  
+  var sum=0,
+      temp=0;
+  cid.forEach(function(value){
+    sum+=value[1];
+  });
+  if(result>sum) return "Insufficient Funds";
+  if(result==sum) return "Closed";
+  
+  var arr=[0.01,0.05,0.1,0.25,1,5,10,20],
+      arr1=[],
+      carr=[];
+
+  for(var i=cid.length-1-1;i>=0;i--){ //不算100
+    if(result===0) break;    //结算完毕了
+    
+    if(result>=cid[i][1]&&cid[i][1]!==0){        
+      result-=cid[i][1].toFixed(2);
+      arr1.push(cid[i]);
+      if(i===0&&result!==0){            //钱有多，但是没办法找钱
+         return "Insufficient Funds";
+      }
+      continue;
+    }
+    
+    if(result<cid[i][1]){
+       temp=Math.floor(result/arr[i]);
+       result-=temp*arr[i];
+       result=result.toFixed(2);
+       if(temp!==0){
+         carr.push(cid[i][0]);
+         carr.push(temp*arr[i]);
+         arr1.push(carr);
+         carr=[];
+       }
+    }//end if
+  }//end for
+  return arr1;
+}
