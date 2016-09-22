@@ -1,0 +1,40 @@
+function sym(args) {
+  var count;
+  var arr=[],arr1=[],temp=[],result=[];
+
+  for(var i=0;i<arguments.length;i++){
+    count=0;
+    arguments[i].sort();
+    arr1=arguments[i].filter(function(value){
+      if(value===count) return false;
+      count=value;
+      return true;
+    });
+    arr.push(arr1);
+    arr1=[];
+  }
+
+  result=arr.reduce(function(a,b){
+    arr1=[];
+    var maxlen=(a[a.length-1]>=b[b.length-1])?a:b;
+    var minlen=(a[a.length-1]<b[b.length-1])?a:b;
+    
+    for(i=0;i<minlen.length;){
+      if(a[0]>b[0]){
+        arr1.push(b.shift());
+      }
+      if(a[0]==b[0]){
+        a.shift();
+        b.shift();
+      }
+      if(a[0]<b[0]){
+        arr1.push(a.shift());
+      }
+    }//end if
+    
+    return arr1.concat(maxlen);
+  });//end reduce
+
+  //return (arguments[1].length<arguments[2].length)?arguments[1]:arguments[2];
+ return result;
+}
