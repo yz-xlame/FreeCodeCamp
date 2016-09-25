@@ -1,0 +1,24 @@
+function updateInventory(arr1, arr2) {
+    // All inventory must be accounted for or you're fired!
+   var flag;
+  
+  arr2.forEach(function(value){
+    flag=0;
+    for(var i=0;i<arr1.length;i++){
+      if(value[1]===arr1[i][1]){
+        arr1[i][0]+=value[0];
+        flag=1;
+      }
+    }//end for
+    if(flag===0){
+      arr1.push(value);
+    }
+  });//end forEach
+  
+  //翻转排序
+  arr1.forEach(function(value){value.reverse();});
+  arr1.sort();
+  arr1.forEach(function(value){value.reverse();});
+  
+    return arr1;
+}
